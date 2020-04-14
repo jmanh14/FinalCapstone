@@ -1,0 +1,35 @@
+﻿@model EatDrinkApplication.Models.Cocktails
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Drinks
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Drink drink in Model.drinks)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => drink.strDrink)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@drink.idDrink">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

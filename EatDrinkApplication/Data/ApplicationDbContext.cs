@@ -27,5 +27,7 @@ namespace EatDrinkApplication.Data
             );
         }
         public DbSet<EatDrinkApplication.Models.HomeCook> HomeCook { get; set; }
+        public DbSet<EatDrinkApplication.Models.Cocktails> Cocktails { get; set; }
+        public DbSet<EatDrinkApplication.Models.CocktailDescription> CocktailDescription { get; set; }
     }
 }

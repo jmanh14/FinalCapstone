@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using EatDrinkApplication.ActionFilters;
+using EatDrinkApplication.Contracts;
+using EatDrinkApplication.Services;
 
 namespace EatDrinkApplication
 {
@@ -47,6 +49,9 @@ namespace EatDrinkApplication
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<ICocktailByIngredientRequest, CocktailByIngredientRequest>();
+            services.AddScoped<ICocktailDescriptionRequest, CocktailDescriptionRequest>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

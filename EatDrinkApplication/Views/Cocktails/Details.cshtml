@@ -1,0 +1,107 @@
+﻿@model EatDrinkApplication.Models.CocktailDescription
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.drinks[0].strDrink)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Instructions
+        </dt>
+        <br />
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.drinks[0].strInstructions)
+        </dd>
+        <dt class="col-sm-2">
+            Ingredients
+        </dt>
+        <br />
+        <dd class="col-sm-10">
+            @if (Model.drinks[0].strMeasure1 != null && Model.drinks[0].strIngredient1 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure1) @Html.DisplayFor(model => model.drinks[0].strIngredient1);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure2 != null && Model.drinks[0].strIngredient2 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure2) @Html.DisplayFor(model => model.drinks[0].strIngredient2);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure3 != null && Model.drinks[0].strIngredient3 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure3) @Html.DisplayFor(model => model.drinks[0].strIngredient3);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure4 != null && Model.drinks[0].strIngredient4 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure4) @Html.DisplayFor(model => model.drinks[0].strIngredient4);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure5 != null && Model.drinks[0].strIngredient5 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure5) @Html.DisplayFor(model => model.drinks[0].strIngredient5);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure6 != null && Model.drinks[0].strIngredient6 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure6) @Html.DisplayFor(model => model.drinks[0].strIngredient6);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure7 != null && Model.drinks[0].strIngredient7 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure7) @Html.DisplayFor(model => model.drinks[0].strIngredient7);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure8 != null && Model.drinks[0].strIngredient8 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure8) @Html.DisplayFor(model => model.drinks[0].strIngredient8);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure9 != null && Model.drinks[0].strIngredient9 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure9) @Html.DisplayFor(model => model.drinks[0].strIngredient9);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure10 != null && Model.drinks[0].strIngredient10 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure10) @Html.DisplayFor(model => model.drinks[0].strIngredient10);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure11 != null && Model.drinks[0].strIngredient11 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure11) @Html.DisplayFor(model => model.drinks[0].strIngredient11);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure12 != null && Model.drinks[0].strIngredient12 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure12) @Html.DisplayFor(model => model.drinks[0].strIngredient12);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure13 != null && Model.drinks[0].strIngredient13 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure13) @Html.DisplayFor(model => model.drinks[0].strIngredient13);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure14 != null && Model.drinks[0].strIngredient14 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure14) @Html.DisplayFor(model => model.drinks[0].strIngredient14);
+                <br />
+            }
+            @if (Model.drinks[0].strMeasure15 != null && Model.drinks[0].strIngredient15 != null)
+            {
+                @Html.DisplayFor(model => model.drinks[0].strMeasure15) @Html.DisplayFor(model => model.drinks[0].strIngredient15);
+                <br />
+            }
+        </dd>
+        </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CocktailDescriptionId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
