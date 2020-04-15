@@ -9,22 +9,23 @@ using System.Threading.Tasks;
 
 namespace EatDrinkApplication.Services
 {
-    public class CocktailByIngredientRequest : ICocktailByIngredientRequest
+    public class CocktailIngredientRequest : ICocktailIngredientRequest
     {
-        public CocktailByIngredientRequest()
+        public CocktailIngredientRequest()
         {
 
         }
-        public async Task<Cocktails> GetCocktailsByIngredients(string ingredient)
+
+        public async Task<DrinkIngredient> GetDrinkIngredient()
         {
-            string url = $"https://www.thecocktaildb.com/api/json/v1/1/filter.php?i={ingredient}";
+            string url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list";
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
             {
                 string json = await response.Content.ReadAsStringAsync();
-                Cocktails cocktails = JsonConvert.DeserializeObject<Cocktails>(json);
-                return cocktails;
+                DrinkIngredient ingredient = JsonConvert.DeserializeObject<DrinkIngredient>(json);
+                return ingredient;
             }
             return null;
         }

@@ -1,4 +1,4 @@
-﻿@model EatDrinkApplication.Models.Cocktails
+﻿@model EatDrinkApplication.ViewModel.CocktailViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -10,6 +10,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="SelectedIngredient" class="form-control" asp-items="@Model.Ingredients"></select>
+            </div>
+            <span asp-validation-for="SelectedIngredient" class="text-danger"></span>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -20,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Drink drink in Model.drinks)
+        @foreach (Drink drink in Model.Cocktail.drinks)
         {
             <tr>
                 <td>

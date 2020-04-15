@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EatDrinkApplication.Contracts
 {
-    public interface ICocktailByIngredientRequest
+    public interface ICocktailIngredientRequest
     {
-        Task<Cocktails> GetCocktailsByIngredients(string ingredient);
+        Task<DrinkIngredient> GetDrinkIngredient();
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EatDrinkApplication.Data;
 using EatDrinkApplication.Models;
 using EatDrinkApplication.Contracts;
+using EatDrinkApplication.ViewModel;
 
 namespace EatDrinkApplication.Controllers
 {
@@ -16,19 +17,53 @@ namespace EatDrinkApplication.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ICocktailByIngredientRequest _cocktailByIngredientRequest;
         private readonly ICocktailDescriptionRequest _cocktailDescriptionRequest;
+        private readonly ICocktailIngredientRequest _cocktailIngredientRequest;
 
-        public CocktailsController(ApplicationDbContext context, ICocktailByIngredientRequest cocktailByIngredientRequest, ICocktailDescriptionRequest cocktailDescriptionRequest)
+        public CocktailsController(ApplicationDbContext context, ICocktailByIngredientRequest cocktailByIngredientRequest, ICocktailDescriptionRequest cocktailDescriptionRequest, ICocktailIngredientRequest cocktailIngredientRequest)
         {
             _context = context;
             _cocktailByIngredientRequest = cocktailByIngredientRequest;
             _cocktailDescriptionRequest = cocktailDescriptionRequest;
+            _cocktailIngredientRequest = cocktailIngredientRequest;
         }
 
         // GET: Cocktails
         public async Task<IActionResult> Index()
         {
-            Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients();
-            return View(cocktails);
+            
+            
+            DrinkIngredient ingredient = await _cocktailIngredientRequest.GetDrinkIngredient();
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = ingredient.drinks.Select(a => new SelectListItem()
+            {
+                Text = a.strIngredient1,
+                Value = a.strIngredient1
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(selectedIngredient);
+            CocktailViewModel cocktailView = new CocktailViewModel()
+            {
+                Cocktail = cocktails,  
+                Ingredients = ingredients
+            };
+            return View(cocktailView);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(CocktailViewModel cocktailView)
+        {
+            Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(cocktailView.SelectedIngredient);
+            DrinkIngredient ingredient = await _cocktailIngredientRequest.GetDrinkIngredient();
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = ingredient.drinks.Select(a => new SelectListItem()
+            {
+                Text = a.strIngredient1,
+                Value = a.strIngredient1
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            cocktailView.Cocktail = cocktails;
+            cocktailView.Ingredients = ingredients;
+            return View(cocktailView);
         }
 
         // GET: Cocktails/Details/5
