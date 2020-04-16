@@ -10,8 +10,9 @@ namespace EatDrinkApplication.ViewModel
     public class CocktailViewModel
     {
         public Cocktails Cocktail { get; set; }
+        public CocktailDescription CocktailDescription { get; set; }
         public List<SelectListItem> Ingredients { get; set; }
-
+        public HomeCook HomeCook { get; set; }
         public string SelectedIngredient { get; set; }
     }
 }

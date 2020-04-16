@@ -23,11 +23,17 @@ namespace EatDrinkApplication.Data
             {
                 Name = "Admin",
                 NormalizedName = "ADMIN"
+            },
+            new IdentityRole
+            {
+                Name = "HomeCook",
+                NormalizedName = "HOMECOOK",
             }
             );
         }
         public DbSet<EatDrinkApplication.Models.HomeCook> HomeCook { get; set; }
         public DbSet<EatDrinkApplication.Models.Cocktails> Cocktails { get; set; }
         public DbSet<EatDrinkApplication.Models.CocktailDescription> CocktailDescription { get; set; }
+        public DbSet<EatDrinkApplication.Models.SavedDrinks> SavedDrinks { get; set; }
     }
 }

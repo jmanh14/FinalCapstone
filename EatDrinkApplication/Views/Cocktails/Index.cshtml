@@ -7,9 +7,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Index">
@@ -41,7 +38,10 @@
                     @Html.DisplayFor(modelItem => drink.strDrink)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@drink.idDrink">Details</a>
+                    <a asp-action="Details" asp-route-id="@drink.idDrink">Details</a> |
+                </td>
+                <td>
+                    <a asp-action="SaveDrink" asp-route-id="@drink.idDrink">Save Drink</a>
                 </td>
             </tr>
         }

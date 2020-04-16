@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EatDrinkApplication.Data.Migrations
+namespace EatDrinkApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,18 @@ namespace EatDrinkApplication.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("EatDrinkApplication.Models.CocktailDescription", b =>
+                {
+                    b.Property<int>("CocktailDescriptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("CocktailDescriptionId");
+
+                    b.ToTable("CocktailDescription");
+                });
 
             modelBuilder.Entity("EatDrinkApplication.Models.Cocktails", b =>
                 {
@@ -80,6 +92,204 @@ namespace EatDrinkApplication.Data.Migrations
                     b.ToTable("HomeCook");
                 });
 
+            modelBuilder.Entity("EatDrinkApplication.Models.Mix", b =>
+                {
+                    b.Property<int>("MixId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CocktailDescriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("dateModified")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("idDrink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strAlcoholic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strCategory")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strCreativeCommonsConfirmed")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkAlternate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkDE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkES")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkFR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkThumb")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkZHHANS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strDrinkZHHANT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strGlass")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIBA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient10")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient11")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient12")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient13")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient14")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient15")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient7")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient8")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strIngredient9")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strInstructions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strInstructionsDE")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strInstructionsES")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strInstructionsFR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strInstructionsZHHANS")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strInstructionsZHHANT")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure10")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure11")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure12")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure13")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure14")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure15")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure7")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure8")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strMeasure9")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strTags")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("strVideo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MixId");
+
+                    b.HasIndex("CocktailDescriptionId");
+
+                    b.ToTable("Mix");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.SavedDrinks", b =>
+                {
+                    b.Property<int>("SavedDrinksId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CocktailDescriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HomeCookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SavedDrinksId");
+
+                    b.HasIndex("CocktailDescriptionId");
+
+                    b.HasIndex("HomeCookId");
+
+                    b.ToTable("SavedDrinks");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -109,10 +319,17 @@ namespace EatDrinkApplication.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "896cc1d8-c8e5-4748-83ba-95e809d79bdc",
-                            ConcurrencyStamp = "6d7e5eab-7173-4027-95e9-6580f46c7457",
+                            Id = "f4ebb464-eab4-4630-ba0d-f86cfff0b34b",
+                            ConcurrencyStamp = "4813e21c-0d1c-4f31-820e-3503a4defe6b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "24e7e962-f63a-450f-beec-419e807961ac",
+                            ConcurrencyStamp = "35f836c0-bac9-4925-aa86-d688cc6aa7e1",
+                            Name = "HomeCook",
+                            NormalizedName = "HOMECOOK"
                         });
                 });
 
@@ -297,6 +514,26 @@ namespace EatDrinkApplication.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Mix", b =>
+                {
+                    b.HasOne("EatDrinkApplication.Models.CocktailDescription", null)
+                        .WithMany("drinks")
+                        .HasForeignKey("CocktailDescriptionId");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.SavedDrinks", b =>
+                {
+                    b.HasOne("EatDrinkApplication.Models.CocktailDescription", "CocktailDescription")
+                        .WithMany()
+                        .HasForeignKey("CocktailDescriptionId");
+
+                    b.HasOne("EatDrinkApplication.Models.HomeCook", "HomeCook")
+                        .WithMany()
+                        .HasForeignKey("HomeCookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -9,6 +9,7 @@ using EatDrinkApplication.Data;
 using EatDrinkApplication.Models;
 using EatDrinkApplication.Contracts;
 using EatDrinkApplication.ViewModel;
+using System.Security.Claims;
 
 namespace EatDrinkApplication.Controllers
 {
@@ -30,32 +31,38 @@ namespace EatDrinkApplication.Controllers
         // GET: Cocktails
         public async Task<IActionResult> Index()
         {
-            
-            
-            DrinkIngredient ingredient = await _cocktailIngredientRequest.GetDrinkIngredient();
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            DrinkIngredient drinkIngredient = await _cocktailIngredientRequest.GetDrinkIngredient();
             List<SelectListItem> ingredients = new List<SelectListItem>();
-            var _ingredients = ingredient.drinks.Select(a => new SelectListItem()
+            var _ingredients = drinkIngredient.drinks.Select(a => new SelectListItem()
             {
                 Text = a.strIngredient1,
                 Value = a.strIngredient1
             });
-            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList(); 
             string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
             Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(selectedIngredient);
             CocktailViewModel cocktailView = new CocktailViewModel()
             {
                 Cocktail = cocktails,  
-                Ingredients = ingredients
+                Ingredients = ingredients,
+                HomeCook = homeCook
             };
             return View(cocktailView);
         }
         [HttpPost]
         public async Task<IActionResult> Index(CocktailViewModel cocktailView)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
             Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(cocktailView.SelectedIngredient);
-            DrinkIngredient ingredient = await _cocktailIngredientRequest.GetDrinkIngredient();
+            DrinkIngredient drinkIngredient = await _cocktailIngredientRequest.GetDrinkIngredient();
             List<SelectListItem> ingredients = new List<SelectListItem>();
-            var _ingredients = ingredient.drinks.Select(a => new SelectListItem()
+            var _ingredients = drinkIngredient.drinks.Select(a => new SelectListItem()
             {
                 Text = a.strIngredient1,
                 Value = a.strIngredient1
@@ -63,6 +70,7 @@ namespace EatDrinkApplication.Controllers
             ingredients = _ingredients.OrderBy(a => a.Text).ToList();
             cocktailView.Cocktail = cocktails;
             cocktailView.Ingredients = ingredients;
+            cocktailView.HomeCook = homeCook;
             return View(cocktailView);
         }
 
@@ -83,6 +91,55 @@ namespace EatDrinkApplication.Controllers
             return View(cocktail);
         }
 
+        public async Task<IActionResult> SaveDrink(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            CocktailDescription cocktail = await _cocktailDescriptionRequest.GetCocktailDescription(id);
+            CocktailViewModel cocktailView = new CocktailViewModel()
+            {
+                CocktailDescription = cocktail,
+                HomeCook = homeCook
+            };
+            if (cocktail == null)
+            {
+                return NotFound();
+            }
+
+            return View(cocktailView);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> SaveDrink(CocktailViewModel cocktailView)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            cocktailView.HomeCook = homeCook;
+            _context.SavedDrinks.Add(new SavedDrinks() {
+              CocktailDescription =  cocktailView.CocktailDescription,
+              HomeCook = homeCook 
+            });
+            DrinkIngredient drinkIngredient = await _cocktailIngredientRequest.GetDrinkIngredient();
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = drinkIngredient.drinks.Select(a => new SelectListItem()
+            {
+                Text = a.strIngredient1,
+                Value = a.strIngredient1
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(selectedIngredient);
+            cocktailView.Cocktail = cocktails;
+            cocktailView.Ingredients = ingredients;
+
+            return View("Index", cocktailView);
+        }
         // GET: Cocktails/Create
         public IActionResult Create()
         {

@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace EatDrinkApplication.Models
 {
     public class CocktailDescription
