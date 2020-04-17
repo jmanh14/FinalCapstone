@@ -53,6 +53,7 @@ namespace EatDrinkApplication
             services.AddScoped<ICocktailByIngredientRequest, CocktailByIngredientRequest>();
             services.AddScoped<ICocktailDescriptionRequest, CocktailDescriptionRequest>();
             services.AddScoped<ICocktailIngredientRequest, CocktailIngredientRequest>();
+            services.AddScoped<IRecipeByIngredientsRequest, RecipeByIngredientsRequest>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
