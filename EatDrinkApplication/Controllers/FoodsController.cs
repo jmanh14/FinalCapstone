@@ -7,22 +7,30 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EatDrinkApplication.Data;
 using EatDrinkApplication.Models;
+using EatDrinkApplication.Contracts;
+using System.Security.Claims;
 
 namespace EatDrinkApplication.Controllers
 {
     public class FoodsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public readonly IRecipeByIngredientsRequest _recipeByIngredientsRequest;
 
-        public FoodsController(ApplicationDbContext context)
+        public FoodsController(ApplicationDbContext context, IRecipeByIngredientsRequest recipeByIngredientsRequest)
         {
             _context = context;
+            _recipeByIngredientsRequest = recipeByIngredientsRequest;
         }
 
         // GET: Foods
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Foods.ToListAsync());
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            Foods foods = await _recipeByIngredientsRequest.GetRecipesByIngredients();
+            return View(foods);
         }
 
         // GET: Foods/Details/5
