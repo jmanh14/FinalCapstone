@@ -8,11 +8,13 @@ namespace EatDrinkApplication.Models
 
     public class Foods
     {
-        public Class1[] Property1 { get; set; }
+        public int FoodsId { get; set; }
+        public Recipe[] Property1 { get; set; }
     }
 
-    public class Class1
+    public class Recipe
     {
+        public int RecipeId { get; set; }
         public int id { get; set; }
         public string title { get; set; }
         public string image { get; set; }
@@ -27,6 +29,7 @@ namespace EatDrinkApplication.Models
 
     public class Missedingredient
     {
+        public int MissedingredientId { get; set; }
         public int id { get; set; }
         public float amount { get; set; }
         public string unit { get; set; }
@@ -37,13 +40,12 @@ namespace EatDrinkApplication.Models
         public string original { get; set; }
         public string originalString { get; set; }
         public string originalName { get; set; }
-        public string[] metaInformation { get; set; }
-        public string[] meta { get; set; }
         public string image { get; set; }
     }
 
     public class Usedingredient
     {
+        public int UsedingredientId { get; set; }
         public int id { get; set; }
         public float amount { get; set; }
         public string unit { get; set; }
@@ -54,13 +56,12 @@ namespace EatDrinkApplication.Models
         public string original { get; set; }
         public string originalString { get; set; }
         public string originalName { get; set; }
-        public string[] metaInformation { get; set; }
-        public string[] meta { get; set; }
         public string image { get; set; }
     }
 
     public class Unusedingredient
     {
+        public int UnusedingredientId { get; set; }
         public int id { get; set; }
         public float amount { get; set; }
         public string unit { get; set; }
@@ -71,8 +72,6 @@ namespace EatDrinkApplication.Models
         public string original { get; set; }
         public string originalString { get; set; }
         public string originalName { get; set; }
-        public object[] metaInformation { get; set; }
-        public object[] meta { get; set; }
         public string image { get; set; }
     }
 
