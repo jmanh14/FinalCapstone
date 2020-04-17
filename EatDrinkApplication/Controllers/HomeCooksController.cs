@@ -98,6 +98,23 @@ namespace EatDrinkApplication.Controllers
             return View(recipesViewModel);
         }
 
+        public async Task<IActionResult> DeleteDrink(int id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            var drinkToRemove = _context.SavedDrinks.Where(a => a.SavedDrinksId == id).FirstOrDefault();
+            _context.SavedDrinks.Remove(drinkToRemove);
+            _context.SaveChanges();
+            var savedDrinks = _context.SavedDrinks.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
+            SavedRecipesViewModel recipesViewModel = new SavedRecipesViewModel()
+            {
+                SavedDrinks = savedDrinks
+            };
+            return View("ViewSavedRecipes", recipesViewModel);
+
+        }
+
         // GET: HomeCooks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

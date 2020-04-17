@@ -313,6 +313,7 @@ namespace EatDrinkApplication.Migrations
                     Ingredient13 = table.Column<string>(nullable: true),
                     Ingredient14 = table.Column<string>(nullable: true),
                     Ingredient15 = table.Column<string>(nullable: true),
+                    Recipe = table.Column<string>(nullable: true),
                     HomeCookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -329,12 +330,12 @@ namespace EatDrinkApplication.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "4b5376c3-9035-47b5-a29a-a795836b2df9", "0cefe290-e9a7-4218-aed6-2f0580e9e9d3", "Admin", "ADMIN" });
+                values: new object[] { "f51a821b-9640-4095-9733-32e5de723280", "8be866c2-6dfc-4f11-abd1-f8ba3bf54334", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "5adefaf6-2137-4fde-8365-bbd89de83753", "5149f1c9-5bd8-4076-8a45-cf13c23f6270", "HomeCook", "HOMECOOK" });
+                values: new object[] { "9e9917aa-7358-4886-beab-526b0d3ed760", "cad551d6-c044-4a74-9a05-eeb818f8f1b8", "HomeCook", "HOMECOOK" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

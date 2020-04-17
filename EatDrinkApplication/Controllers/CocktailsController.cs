@@ -137,6 +137,7 @@ namespace EatDrinkApplication.Controllers
                 Ingredient13 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure13} {cocktailView.CocktailDescription.drinks[0].strIngredient13}",
                 Ingredient14 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure14} {cocktailView.CocktailDescription.drinks[0].strIngredient14}",
                 Ingredient15 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure15} {cocktailView.CocktailDescription.drinks[0].strIngredient15}",
+                Recipe = cocktailView.CocktailDescription.drinks[0].strInstructions,
                 HomeCook = homeCook 
             });
             DrinkIngredient drinkIngredient = await _cocktailIngredientRequest.GetDrinkIngredient();

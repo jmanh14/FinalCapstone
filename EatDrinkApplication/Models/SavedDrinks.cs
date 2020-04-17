@@ -25,6 +25,7 @@ namespace EatDrinkApplication.Models
         public string? Ingredient13{ get; set; }
         public string? Ingredient14{ get; set; }
         public string? Ingredient15{ get; set; }
+        public string Recipe { get; set; }
 
         [ForeignKey("HomeCook")]
         public int HomeCookId { get; set; }

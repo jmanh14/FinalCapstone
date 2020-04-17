@@ -5,117 +5,117 @@
 }
 
 <h1>Saved Recipes</h1>
-<br /><br />
+<br />
+<br />
 <h3>Food</h3>
-<br /><br />
-      <table class="table">
-          <thead>
-              <tr>
-                  <th>
-                      Drinks
-                  </th>
-                  <th></th>
-              </tr>
-          </thead>
-          <tbody>
-              @foreach (SavedDrinks drink in Model.SavedDrinks)
-              {
-              <tr>
-                  <td>
-                      @Html.DisplayFor(modelItem => drink.Name)
-                  </td>
-                  @if (drink.Ingredient1 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient1)
-                      </td>
-                  }
-                  @if (drink.Ingredient2 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient2)
-                      </td>
-                  }
-                  @if (drink.Ingredient3 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient3)
-                      </td>
-                  }
-                  @if (drink.Ingredient4 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient4)
-                      </td>
-                  }
-                  @if (drink.Ingredient5 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient5)
-                      </td>
-                  }
-                  @if (drink.Ingredient6 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient6)
-                      </td>
-                  }
-                  @if (drink.Ingredient7 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient7)
-                      </td>
-                  }
-                  @if (drink.Ingredient8 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient8)
-                      </td>
-                  }
-                  @if (drink.Ingredient9 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient9)
-                      </td>
-                  }
-                  @if (drink.Ingredient10 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient10)
-                      </td>
-                  }
-                  @if (drink.Ingredient11 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient11)
-                      </td>
-                  }
-                  @if (drink.Ingredient12 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient12)
-                      </td>
-                  }
-                  @if (drink.Ingredient13 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient13)
-                      </td>
-                  }
-                  @if (drink.Ingredient14 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient14)
-                      </td>
-                  }
-                  @if (drink.Ingredient15 != " ")
-                  {
-                      <td>
-                          @Html.DisplayFor(modelItem => drink.Ingredient15)
-                      </td>
-                  }
+<br />
+<br />
+<h3>Drinks</h3>
+<br />
+@foreach (SavedDrinks drink in Model.SavedDrinks)
+{
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Drink Name
+            </dt>
+            <br />
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => drink.Name)
+            </dd>
+            <dt class="col-sm-2">
+                Instructions
+            </dt>
+            <br />
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => drink.Recipe)
+            </dd>
+            <dt class="col-sm-2">
+                Ingredients
+            </dt>
+            <br />
+            <dd class="col-sm-10">
+                @if (drink.Ingredient1 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient1)
+                    <br />
+                }
+                @if (drink.Ingredient2 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient2)
+                    <br />
+                }
+                @if (drink.Ingredient3 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient3)
+                    <br />
+                }
+                @if (drink.Ingredient4 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient4)
+                    <br />
+                }
+                @if (drink.Ingredient5 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient5)
+                    <br />
+                }
+                @if (drink.Ingredient6 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient6)
+                    <br />
+                }
+                @if (drink.Ingredient7 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient7)
+                    <br />
+                }
+                @if (drink.Ingredient8 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient8)
+                    <br />
+                }
+                @if (drink.Ingredient9 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient9)
+                    <br />
+                }
+                @if (drink.Ingredient10 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient10)
+                    <br />
+                }
+                @if (drink.Ingredient11 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient11)
+                    <br />
+                }
+                @if (drink.Ingredient12 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient12)
+                    <br />
+                }
+                @if (drink.Ingredient13 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient13)
+                    <br />
+                }
+                @if (drink.Ingredient14 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient14)
+                    <br />
+                }
+                @if (drink.Ingredient15 != " ")
+                {
+                    @Html.DisplayFor(model => drink.Ingredient15)
+                    <br />
+                }
 
-              </tr>
-              }
-          </tbody>
-      </table>
+            </dd>
+        </dl>
+        <div class="row">
+            <a asp-action="DeleteDrink" asp-route-id="@drink.SavedDrinksId">Delete Drink</a>
+        </div>
+    </div>
+    <br /><br />
+}
