@@ -23,7 +23,7 @@ namespace EatDrinkApplication.ActionFilters
                 if (_claimsPrincipal.IsInRole("HomeCook"))
                 {
                     context.Result = new RedirectToActionResult("Index",
-                    "HoomCooks", null);
+                    "HomeCooks", null);
                 }
                 else if (_claimsPrincipal.IsInRole("Admin"))
                 {

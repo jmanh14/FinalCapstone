@@ -82,7 +82,6 @@ namespace EatDrinkApplication.Controllers
                 return NotFound();
             }
             CocktailDescription cocktail = await _cocktailDescriptionRequest.GetCocktailDescription(id);
-
             if (cocktail == null)
             {
                 return NotFound();
@@ -122,8 +121,23 @@ namespace EatDrinkApplication.Controllers
             userId).SingleOrDefault();
             cocktailView.HomeCook = homeCook;
             _context.SavedDrinks.Add(new SavedDrinks() {
-              CocktailDescription =  cocktailView.CocktailDescription,
-              HomeCook = homeCook 
+                Name = cocktailView.CocktailDescription.drinks[0].strDrink,
+                Ingredient1 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure1} {cocktailView.CocktailDescription.drinks[0].strIngredient1}",
+                Ingredient2 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure2} {cocktailView.CocktailDescription.drinks[0].strIngredient2}",
+                Ingredient3 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure3} {cocktailView.CocktailDescription.drinks[0].strIngredient3}",
+                Ingredient4 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure4} {cocktailView.CocktailDescription.drinks[0].strIngredient4}",
+                Ingredient5 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure5} {cocktailView.CocktailDescription.drinks[0].strIngredient5}",
+                Ingredient6 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure6} {cocktailView.CocktailDescription.drinks[0].strIngredient6}",
+                Ingredient7 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure7} {cocktailView.CocktailDescription.drinks[0].strIngredient7}",
+                Ingredient8 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure8} {cocktailView.CocktailDescription.drinks[0].strIngredient8}",
+                Ingredient9 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure9} {cocktailView.CocktailDescription.drinks[0].strIngredient9}",
+                Ingredient10 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure10} {cocktailView.CocktailDescription.drinks[0].strIngredient10}",
+                Ingredient11 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure11} {cocktailView.CocktailDescription.drinks[0].strIngredient11}",
+                Ingredient12 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure12} {cocktailView.CocktailDescription.drinks[0].strIngredient12}",
+                Ingredient13 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure13} {cocktailView.CocktailDescription.drinks[0].strIngredient13}",
+                Ingredient14 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure14} {cocktailView.CocktailDescription.drinks[0].strIngredient14}",
+                Ingredient15 = $"{cocktailView.CocktailDescription.drinks[0].strMeasure15} {cocktailView.CocktailDescription.drinks[0].strIngredient15}",
+                HomeCook = homeCook 
             });
             DrinkIngredient drinkIngredient = await _cocktailIngredientRequest.GetDrinkIngredient();
             List<SelectListItem> ingredients = new List<SelectListItem>();
@@ -137,7 +151,7 @@ namespace EatDrinkApplication.Controllers
             Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(selectedIngredient);
             cocktailView.Cocktail = cocktails;
             cocktailView.Ingredients = ingredients;
-
+            _context.SaveChanges();
             return View("Index", cocktailView);
         }
         // GET: Cocktails/Create

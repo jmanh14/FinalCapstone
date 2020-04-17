@@ -275,15 +275,58 @@ namespace EatDrinkApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CocktailDescriptionId")
-                        .HasColumnType("int");
-
                     b.Property<int>("HomeCookId")
                         .HasColumnType("int");
 
-                    b.HasKey("SavedDrinksId");
+                    b.Property<string>("Ingredient1")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CocktailDescriptionId");
+                    b.Property<string>("Ingredient10")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient11")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient12")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient13")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient14")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient15")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient7")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient8")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingredient9")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SavedDrinksId");
 
                     b.HasIndex("HomeCookId");
 
@@ -319,15 +362,15 @@ namespace EatDrinkApplication.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f4ebb464-eab4-4630-ba0d-f86cfff0b34b",
-                            ConcurrencyStamp = "4813e21c-0d1c-4f31-820e-3503a4defe6b",
+                            Id = "4b5376c3-9035-47b5-a29a-a795836b2df9",
+                            ConcurrencyStamp = "0cefe290-e9a7-4218-aed6-2f0580e9e9d3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "24e7e962-f63a-450f-beec-419e807961ac",
-                            ConcurrencyStamp = "35f836c0-bac9-4925-aa86-d688cc6aa7e1",
+                            Id = "5adefaf6-2137-4fde-8365-bbd89de83753",
+                            ConcurrencyStamp = "5149f1c9-5bd8-4076-8a45-cf13c23f6270",
                             Name = "HomeCook",
                             NormalizedName = "HOMECOOK"
                         });
@@ -525,10 +568,6 @@ namespace EatDrinkApplication.Migrations
 
             modelBuilder.Entity("EatDrinkApplication.Models.SavedDrinks", b =>
                 {
-                    b.HasOne("EatDrinkApplication.Models.CocktailDescription", "CocktailDescription")
-                        .WithMany()
-                        .HasForeignKey("CocktailDescriptionId");
-
                     b.HasOne("EatDrinkApplication.Models.HomeCook", "HomeCook")
                         .WithMany()
                         .HasForeignKey("HomeCookId")

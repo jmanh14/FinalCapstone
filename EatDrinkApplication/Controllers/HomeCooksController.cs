@@ -10,6 +10,7 @@ using EatDrinkApplication.Models;
 using Microsoft.AspNetCore.Authorization;
 using EatDrinkApplication.Contracts;
 using System.Security.Claims;
+using EatDrinkApplication.ViewModel;
 
 namespace EatDrinkApplication.Controllers
 {
@@ -31,6 +32,10 @@ namespace EatDrinkApplication.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
+            if(homeCook == null)
+            {
+               return RedirectToAction("Create");
+            }
             return View(homeCook);
         }
 
@@ -69,12 +74,28 @@ namespace EatDrinkApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                homeCook.IdentityUserId = userId;
+                _context.Add(homeCook);
                 _context.Add(homeCook);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", homeCook.IdentityUserId);
             return View(homeCook);
+        }
+
+        public async Task<IActionResult> ViewSavedRecipes()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            var savedDrinks = _context.SavedDrinks.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
+            SavedRecipesViewModel recipesViewModel = new SavedRecipesViewModel()
+            {
+                SavedDrinks = savedDrinks
+            };
+            return View(recipesViewModel);
         }
 
         // GET: HomeCooks/Edit/5

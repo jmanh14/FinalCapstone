@@ -297,18 +297,27 @@ namespace EatDrinkApplication.Migrations
                 {
                     SavedDrinksId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CocktailDescriptionId = table.Column<int>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Ingredient1 = table.Column<string>(nullable: true),
+                    Ingredient2 = table.Column<string>(nullable: true),
+                    Ingredient3 = table.Column<string>(nullable: true),
+                    Ingredient4 = table.Column<string>(nullable: true),
+                    Ingredient5 = table.Column<string>(nullable: true),
+                    Ingredient6 = table.Column<string>(nullable: true),
+                    Ingredient7 = table.Column<string>(nullable: true),
+                    Ingredient8 = table.Column<string>(nullable: true),
+                    Ingredient9 = table.Column<string>(nullable: true),
+                    Ingredient10 = table.Column<string>(nullable: true),
+                    Ingredient11 = table.Column<string>(nullable: true),
+                    Ingredient12 = table.Column<string>(nullable: true),
+                    Ingredient13 = table.Column<string>(nullable: true),
+                    Ingredient14 = table.Column<string>(nullable: true),
+                    Ingredient15 = table.Column<string>(nullable: true),
                     HomeCookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SavedDrinks", x => x.SavedDrinksId);
-                    table.ForeignKey(
-                        name: "FK_SavedDrinks_CocktailDescription_CocktailDescriptionId",
-                        column: x => x.CocktailDescriptionId,
-                        principalTable: "CocktailDescription",
-                        principalColumn: "CocktailDescriptionId",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SavedDrinks_HomeCook_HomeCookId",
                         column: x => x.HomeCookId,
@@ -320,12 +329,12 @@ namespace EatDrinkApplication.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f4ebb464-eab4-4630-ba0d-f86cfff0b34b", "4813e21c-0d1c-4f31-820e-3503a4defe6b", "Admin", "ADMIN" });
+                values: new object[] { "4b5376c3-9035-47b5-a29a-a795836b2df9", "0cefe290-e9a7-4218-aed6-2f0580e9e9d3", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "24e7e962-f63a-450f-beec-419e807961ac", "35f836c0-bac9-4925-aa86-d688cc6aa7e1", "HomeCook", "HOMECOOK" });
+                values: new object[] { "5adefaf6-2137-4fde-8365-bbd89de83753", "5149f1c9-5bd8-4076-8a45-cf13c23f6270", "HomeCook", "HOMECOOK" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -379,11 +388,6 @@ namespace EatDrinkApplication.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Mix_CocktailDescriptionId",
                 table: "Mix",
-                column: "CocktailDescriptionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SavedDrinks_CocktailDescriptionId",
-                table: "SavedDrinks",
                 column: "CocktailDescriptionId");
 
             migrationBuilder.CreateIndex(

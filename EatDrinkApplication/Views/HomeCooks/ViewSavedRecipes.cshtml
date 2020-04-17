@@ -1,0 +1,121 @@
+﻿@model EatDrinkApplication.ViewModel.SavedRecipesViewModel
+@{
+    ViewData["Title"] = "ViewSavedRecipes";
+    Layout = "~/Views/Shared/_HomeCookLayout.cshtml";
+}
+
+<h1>Saved Recipes</h1>
+<br /><br />
+<h3>Food</h3>
+<br /><br />
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>
+                      Drinks
+                  </th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach (SavedDrinks drink in Model.SavedDrinks)
+              {
+              <tr>
+                  <td>
+                      @Html.DisplayFor(modelItem => drink.Name)
+                  </td>
+                  @if (drink.Ingredient1 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient1)
+                      </td>
+                  }
+                  @if (drink.Ingredient2 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient2)
+                      </td>
+                  }
+                  @if (drink.Ingredient3 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient3)
+                      </td>
+                  }
+                  @if (drink.Ingredient4 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient4)
+                      </td>
+                  }
+                  @if (drink.Ingredient5 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient5)
+                      </td>
+                  }
+                  @if (drink.Ingredient6 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient6)
+                      </td>
+                  }
+                  @if (drink.Ingredient7 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient7)
+                      </td>
+                  }
+                  @if (drink.Ingredient8 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient8)
+                      </td>
+                  }
+                  @if (drink.Ingredient9 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient9)
+                      </td>
+                  }
+                  @if (drink.Ingredient10 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient10)
+                      </td>
+                  }
+                  @if (drink.Ingredient11 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient11)
+                      </td>
+                  }
+                  @if (drink.Ingredient12 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient12)
+                      </td>
+                  }
+                  @if (drink.Ingredient13 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient13)
+                      </td>
+                  }
+                  @if (drink.Ingredient14 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient14)
+                      </td>
+                  }
+                  @if (drink.Ingredient15 != " ")
+                  {
+                      <td>
+                          @Html.DisplayFor(modelItem => drink.Ingredient15)
+                      </td>
+                  }
+
+              </tr>
+              }
+          </tbody>
+      </table>
