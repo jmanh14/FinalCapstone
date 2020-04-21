@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 namespace EatDrinkApplication.Models
 {
-
     public class Foods
     {
         public int FoodsId { get; set; }

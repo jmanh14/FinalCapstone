@@ -1,4 +1,5 @@
 ﻿using EatDrinkApplication.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace EatDrinkApplication.Contracts
 {
     public interface IRecipeByIngredientsRequest
     {
-        Task<Foods> GetRecipesByIngredients();
+        Task<List<JObject>> GetRecipesByIngredients();
     }
 }

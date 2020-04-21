@@ -29,8 +29,15 @@ namespace EatDrinkApplication.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
-            Foods foods = await _recipeByIngredientsRequest.GetRecipesByIngredients();
-            return View(foods);
+            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients();
+            Recipe recipe = foods[0].ToObject<Recipe>();
+            Recipe[] recipes;
+            recipes = new Recipe[] { recipe };
+            Foods food = new Foods()
+            {
+                Property1 = recipes
+            };
+            return View(food.Property1);
         }
 
         // GET: Foods/Details/5
