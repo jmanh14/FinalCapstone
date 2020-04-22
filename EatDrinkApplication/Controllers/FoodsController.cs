@@ -138,7 +138,7 @@ namespace EatDrinkApplication.Controllers
             var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
             string ingredientsFromRecipe = "";
-            for(int i = 0; i < foodViewModel.RecipeInfo.extendedIngredients.Length; i++)
+            for (int i = 0; i < foodViewModel.RecipeInfo.extendedIngredients.Length; i++)
             {
                 ingredientsFromRecipe += foodViewModel.RecipeInfo.extendedIngredients[i].originalString + " ";
             }
@@ -175,6 +175,69 @@ namespace EatDrinkApplication.Controllers
             return View("Index", foodViewModel);
 
         }
+
+        public async Task<IActionResult> Cart (string id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            RecipeInfo recipeInfo = await _recipeInfoRequest.GetRecipeInfo(id);
+            string items = "";
+            for(int i = 0; i < recipeInfo.extendedIngredients.Length; i++)
+            {
+                items += recipeInfo.extendedIngredients[i].originalString + " , ";
+            }
+            ShoppingCart cart = _context.ShoppingCart.Where(a => a.HomeCookId == homeCook.HomeCookId).FirstOrDefault();
+            if (cart == null)
+            {
+                cart = new ShoppingCart()
+                {
+                    Items = items,
+                    HomeCook = homeCook
+                };
+                _context.ShoppingCart.Add(cart);
+            }
+            else
+            {
+                cart.Items += items;
+                cart.HomeCook = homeCook;
+                _context.ShoppingCart.Update(cart);
+            }
+            _context.SaveChanges();
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = _context.Ingredients.Select(a => new SelectListItem()
+            {
+                Text = a.Name,
+                Value = a.Name
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(selectedIngredient);
+            Recipe[] recipes = new Recipe[foods.Count];
+            for (int i = 0; i < foods.Count; i++)
+            {
+                Recipe recipe = foods[i].ToObject<Recipe>();
+                recipes[i] = recipe;
+            }
+            if (_context.Ingredients.Contains(null))
+            {
+                IngredientIO iO = new IngredientIO(_context);
+                iO.ReadFile();
+            }
+
+            Foods food = new Foods()
+            {
+                Property1 = recipes
+            };
+            FoodViewModel foodViewModel = new FoodViewModel()
+            {
+                Foods = food,
+                Ingredients = ingredients,
+                HomeCook = homeCook
+            };
+            return View("Index", foodViewModel);
+        }
+
         //GET: Foods/Create
         public IActionResult Create()
         {

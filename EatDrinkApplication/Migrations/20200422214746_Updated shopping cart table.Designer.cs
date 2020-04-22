@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EatDrinkApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200422204311_Added shopping cart table")]
-    partial class Addedshoppingcarttable
+    [Migration("20200422214746_Updated shopping cart table")]
+    partial class Updatedshoppingcarttable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -492,6 +492,9 @@ namespace EatDrinkApplication.Migrations
                     b.Property<int>("HomeCookId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Items")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ShoppingCartId");
 
                     b.HasIndex("HomeCookId");
@@ -628,15 +631,15 @@ namespace EatDrinkApplication.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fcf896d7-b953-4555-9bd4-6a8adf70f862",
-                            ConcurrencyStamp = "9485b8ff-f525-41de-b534-bcef0e8d71ee",
+                            Id = "f49a8502-de5c-49c3-9926-482453a95dbd",
+                            ConcurrencyStamp = "79405f25-c00e-4b31-91a3-7be2eb420466",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "66edab0e-d3c5-4736-a579-d3b55ba6b002",
-                            ConcurrencyStamp = "97e761e0-b3d4-4b6a-a9bb-6b25012289f5",
+                            Id = "134a0beb-d3eb-4f91-9dbc-3e378120bcbd",
+                            ConcurrencyStamp = "e422d080-a910-4b41-80bd-c83bc8b080a8",
                             Name = "HomeCook",
                             NormalizedName = "HOMECOOK"
                         });

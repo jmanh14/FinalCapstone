@@ -9,8 +9,7 @@ namespace EatDrinkApplication.Models
     public class ShoppingCart
     {
         public int ShoppingCartId { get; set; }
-        [NotMapped]
-        public List<string> Items { get; set; }
+        public string Items { get; set; }
 
         [ForeignKey("HomeCook")]
         public int HomeCookId { get; set; }

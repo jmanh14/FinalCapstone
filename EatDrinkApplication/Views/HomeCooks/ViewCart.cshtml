@@ -1,0 +1,21 @@
+﻿@model EatDrinkApplication.Models.ShoppingCart
+@{
+    ViewData["Title"] = "ViewCart";
+    Layout = "~/Views/Shared/_HomeCookLayout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cart</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => Model.Items)
+            </td>
+        </tr>
+    </tbody>
+</table>
+

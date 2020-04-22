@@ -100,6 +100,15 @@ namespace EatDrinkApplication.Controllers
             return View(recipesViewModel);
         }
 
+        public async Task<IActionResult> ViewCart()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            var cart = _context.ShoppingCart.Where(a => a.HomeCookId == homeCook.HomeCookId).FirstOrDefault();
+            return View(cart);
+        }
+
         public async Task<IActionResult> DeleteFood(int id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

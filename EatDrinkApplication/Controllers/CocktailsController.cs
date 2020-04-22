@@ -156,10 +156,109 @@ namespace EatDrinkApplication.Controllers
             return View("Index", cocktailView);
         }
 
-        //public async Task<IActionResult> Cart(string item)
-        //{
+        public async Task<IActionResult> Cart(string id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            CocktailDescription cocktailDescription = await _cocktailDescriptionRequest.GetCocktailDescription(id);
+            string items = "";
+            if(cocktailDescription.drinks[0].strIngredient1 != null)
+            {
+                 items += cocktailDescription.drinks[0].strIngredient1 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient2 != null)
+            {
+                 items += cocktailDescription.drinks[0].strIngredient2 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient3 != null)
+            {
+                 items += cocktailDescription.drinks[0].strIngredient3 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient4 != null)
+            {
+                 items += cocktailDescription.drinks[0].strIngredient4 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient5 != null)
+            {
+                 items += cocktailDescription.drinks[0].strIngredient5 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient6 != null)
+            {
+                 items += cocktailDescription.drinks[0].strIngredient6 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient7 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient7 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient8 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient8 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient9 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient9 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient10 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient10 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient11 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient11 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient12 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient12 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient13 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient13 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient14 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient14 + " , ";
+            }
+            if (cocktailDescription.drinks[0].strIngredient15 != null)
+            {
+                items += cocktailDescription.drinks[0].strIngredient15 + " , ";
+            }
+            ShoppingCart cart = _context.ShoppingCart.Where(a => a.HomeCookId == homeCook.HomeCookId).FirstOrDefault();
+            if (cart == null)
+            {
+                cart = new ShoppingCart()
+                {
+                    Items = items,
+                    HomeCook = homeCook
+                };
+                _context.ShoppingCart.Add(cart);
+            }
+            else
+            {
 
-        //}
+                cart.Items += items;
+                cart.HomeCook = homeCook;
+                _context.ShoppingCart.Update(cart);
+            }
+            _context.SaveChanges();
+            DrinkIngredient drinkIngredient = await _cocktailIngredientRequest.GetDrinkIngredient();
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = drinkIngredient.drinks.Select(a => new SelectListItem()
+            {
+                Text = a.strIngredient1,
+                Value = a.strIngredient1
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            Cocktails cocktails = await _cocktailByIngredientRequest.GetCocktailsByIngredients(selectedIngredient);
+            CocktailViewModel cocktailView = new CocktailViewModel()
+            {
+                Cocktail = cocktails,
+                HomeCook = homeCook,
+                Ingredients = ingredients
+            };
+            return View("Index", cocktailView);
+        }
         // GET: Cocktails/Create
         public IActionResult Create()
         {
