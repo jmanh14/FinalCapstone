@@ -10,6 +10,7 @@ using EatDrinkApplication.Models;
 using EatDrinkApplication.Contracts;
 using System.Security.Claims;
 using EatDrinkApplication.Helper;
+using EatDrinkApplication.ViewModel;
 
 namespace EatDrinkApplication.Controllers
 {
@@ -32,10 +33,21 @@ namespace EatDrinkApplication.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
-            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients();
-            Recipe recipe = foods[0].ToObject<Recipe>();
-            Recipe[] recipes;
-            recipes = new Recipe[] { recipe };
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = _context.Ingredients.Select(a => new SelectListItem()
+            {
+                Text = a.Name,
+                Value = a.Name
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(selectedIngredient);
+            Recipe[] recipes = new Recipe[foods.Count];
+            for (int i = 0; i < foods.Count; i++)
+            {
+                Recipe recipe = foods[i].ToObject<Recipe>();
+                recipes[i] = recipe;
+            }
             if (_context.Ingredients.Contains(null))
             {
                 IngredientIO iO = new IngredientIO(_context);
@@ -46,9 +58,44 @@ namespace EatDrinkApplication.Controllers
             {
                 Property1 = recipes
             };
-            return View(food.Property1);
+            FoodViewModel foodViewModel = new FoodViewModel()
+            {
+                Foods = food,
+                Ingredients = ingredients,
+                HomeCook = homeCook
+            };
+            return View(foodViewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(FoodViewModel foodViewModel)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(foodViewModel.SelectedIngredient);
+            Recipe[] recipes = new Recipe[foods.Count];
+            for (int i = 0; i < foods.Count; i++)
+            {
+                Recipe recipe = foods[i].ToObject<Recipe>();
+                recipes[i] = recipe;
+            }
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = _context.Ingredients.Select(a => new SelectListItem()
+            {
+                Text = a.Name,
+                Value = a.Name
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            Foods food = new Foods()
+            {
+                Property1 = recipes
+            };
+            foodViewModel.HomeCook = homeCook;
+            foodViewModel.Foods = food;
+            foodViewModel.Ingredients = ingredients;
+            return View(foodViewModel);
+        }
         // GET: Foods/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -65,7 +112,70 @@ namespace EatDrinkApplication.Controllers
             return View(recipeInfo);
         }
 
-        // GET: Foods/Create
+        public async Task<IActionResult> SaveFood(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            RecipeInfo recipeInfo = await _recipeInfoRequest.GetRecipeInfo(id);
+            FoodViewModel foodViewModel = new FoodViewModel()
+            {
+                RecipeInfo = recipeInfo,
+                HomeCook = homeCook
+            };
+            return View(foodViewModel);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveFood(FoodViewModel foodViewModel)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            string ingredientsFromRecipe = "";
+            for(int i = 0; i < foodViewModel.RecipeInfo.extendedIngredients.Length; i++)
+            {
+                ingredientsFromRecipe += foodViewModel.RecipeInfo.extendedIngredients[i].originalString + " ";
+            }
+            foodViewModel.HomeCook = homeCook;
+            _context.SavedFoods.Add(new SavedFoods()
+            {
+                Name = foodViewModel.RecipeInfo.title,
+                Ingredients = ingredientsFromRecipe,
+                Recipe = foodViewModel.RecipeInfo.instructions,
+                HomeCook = homeCook
+            });
+            List<SelectListItem> ingredients = new List<SelectListItem>();
+            var _ingredients = _context.Ingredients.Select(a => new SelectListItem()
+            {
+                Text = a.Name,
+                Value = a.Name
+            });
+            ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(selectedIngredient);
+            Recipe[] recipes = new Recipe[foods.Count];
+            for (int i = 0; i < foods.Count; i++)
+            {
+                Recipe recipe = foods[i].ToObject<Recipe>();
+                recipes[i] = recipe;
+            }
+            Foods food = new Foods()
+            {
+                Property1 = recipes
+            };
+            foodViewModel.Foods = food;
+            foodViewModel.Ingredients = ingredients;
+            _context.SaveChanges();
+            return View("Index", foodViewModel);
+
+        }
+        //GET: Foods/Create
         public IActionResult Create()
         {
             return View();

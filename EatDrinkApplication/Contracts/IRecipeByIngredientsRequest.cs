@@ -9,6 +9,6 @@ namespace EatDrinkApplication.Contracts
 {
     public interface IRecipeByIngredientsRequest
     {
-        Task<List<JObject>> GetRecipesByIngredients();
+        Task<List<JObject>> GetRecipesByIngredients(string ingredients);
     }
 }

@@ -37,5 +37,6 @@ namespace EatDrinkApplication.Data
         public DbSet<EatDrinkApplication.Models.SavedDrinks> SavedDrinks { get; set; }
         public DbSet<EatDrinkApplication.Models.Foods> Foods { get; set; }
         public DbSet<EatDrinkApplication.Models.Ingredients> Ingredients { get; set; }
+        public DbSet<EatDrinkApplication.Models.SavedFoods> SavedFoods { get; set; }
     }
 }

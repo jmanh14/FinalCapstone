@@ -91,11 +91,31 @@ namespace EatDrinkApplication.Controllers
             var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
             var savedDrinks = _context.SavedDrinks.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
+            var savedFoods = _context.SavedFoods.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
             SavedRecipesViewModel recipesViewModel = new SavedRecipesViewModel()
             {
-                SavedDrinks = savedDrinks
+                SavedDrinks = savedDrinks,
+                SavedFoods = savedFoods
             };
             return View(recipesViewModel);
+        }
+
+        public async Task<IActionResult> DeleteFood(int id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            var foodToRemove = _context.SavedFoods.Where(a => a.SavedFoodsId == id).FirstOrDefault();
+            _context.SavedFoods.Remove(foodToRemove);
+            _context.SaveChanges();
+            var savedFoods = _context.SavedFoods.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
+            var savedDrinks = _context.SavedDrinks.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
+            SavedRecipesViewModel recipesViewModel = new SavedRecipesViewModel()
+            {
+                SavedFoods = savedFoods,
+                SavedDrinks = savedDrinks
+            };
+            return View("ViewSavedRecipes", recipesViewModel);
         }
 
         public async Task<IActionResult> DeleteDrink(int id)
@@ -106,9 +126,11 @@ namespace EatDrinkApplication.Controllers
             var drinkToRemove = _context.SavedDrinks.Where(a => a.SavedDrinksId == id).FirstOrDefault();
             _context.SavedDrinks.Remove(drinkToRemove);
             _context.SaveChanges();
+            var savedFoods = _context.SavedFoods.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
             var savedDrinks = _context.SavedDrinks.Where(a => a.HomeCookId == homeCook.HomeCookId).ToList();
             SavedRecipesViewModel recipesViewModel = new SavedRecipesViewModel()
             {
+                SavedFoods = savedFoods,
                 SavedDrinks = savedDrinks
             };
             return View("ViewSavedRecipes", recipesViewModel);

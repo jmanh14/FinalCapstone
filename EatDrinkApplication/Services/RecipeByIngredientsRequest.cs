@@ -17,9 +17,9 @@ namespace EatDrinkApplication.Services
                     
         }
 
-        public async Task<List<JObject>> GetRecipesByIngredients()
+        public async Task<List<JObject>> GetRecipesByIngredients(string ingredients)
         {
-            string url = $"https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2&apiKey=44486bab87864bd2828d594c8e459825";
+            string url = $"https://api.spoonacular.com/recipes/findByIngredients?ingredients={ingredients}&number=10&apiKey=44486bab87864bd2828d594c8e459825";
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -28,10 +28,10 @@ namespace EatDrinkApplication.Services
                 json = "{" + "results :" + json + "}";
                 var jsonResults = JsonConvert.DeserializeObject<JObject>(json);
                 List<JObject> foods = new List<JObject>();
-                for(int i =0; i< jsonResults.Count; i++)
+                for(int i =0; i< jsonResults["results"].Count(); i++)
                 {
                     foods.Add(jsonResults["results"][i].ToObject<JObject>());
-                }
+                }  
                 //var results = jsonResults["results"][0];
                 //var test = jsonResults["missedIngredients"];  
                 //List<JObject> test = new List<JObject>();
@@ -40,7 +40,7 @@ namespace EatDrinkApplication.Services
                 //    test.Add(jsonResults[i].ToObject<JObject>());
                 //}
                 //Console.WriteLine(foods[0]["title"]);
-                return foods;
+                 return foods;
             }
             return null;   
         }

@@ -9,6 +9,37 @@
 <br />
 <h3>Food</h3>
 <br />
+@foreach(SavedFoods food in Model.SavedFoods)
+{
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Food Name
+        </dt>
+        <br />
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => food.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Instructions
+        </dt>
+        <br />
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => food.Recipe)
+        </dd>
+        <dt class="col-sm-2">
+            Ingredients
+        </dt>
+        <br />
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => food.Ingredients)
+        </dd>
+    </dl>
+    <div class="row">
+        <a asp-action="DeleteFood" asp-route-id="@food.SavedFoodsId">Delete Food</a>
+    </div>
+</div>
+}
 <br />
 <h3>Drinks</h3>
 <br />

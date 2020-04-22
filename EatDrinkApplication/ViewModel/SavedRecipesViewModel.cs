@@ -9,5 +9,6 @@ namespace EatDrinkApplication.ViewModel
     public class SavedRecipesViewModel
     {
         public List<SavedDrinks> SavedDrinks { get; set; }
+        public List<SavedFoods> SavedFoods { get; set; }
     }
 }
