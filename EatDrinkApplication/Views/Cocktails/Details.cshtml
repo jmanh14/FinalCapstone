@@ -26,6 +26,7 @@
             @if (Model.drinks[0].strMeasure1 != null && Model.drinks[0].strIngredient1 != null)
             {
                 @Html.DisplayFor(model => model.drinks[0].strMeasure1) @Html.DisplayFor(model => model.drinks[0].strIngredient1);
+                <a asp-action="Cart" asp-route-id="@Model.drinks[0].strIngredient1">Add to Cart</a>
                 <br />
             }
             @if (Model.drinks[0].strMeasure2 != null && Model.drinks[0].strIngredient2 != null)

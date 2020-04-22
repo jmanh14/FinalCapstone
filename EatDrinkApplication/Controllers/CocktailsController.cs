@@ -155,6 +155,11 @@ namespace EatDrinkApplication.Controllers
             _context.SaveChanges();
             return View("Index", cocktailView);
         }
+
+        //public async Task<IActionResult> Cart(string item)
+        //{
+
+        //}
         // GET: Cocktails/Create
         public IActionResult Create()
         {
