@@ -9,6 +9,7 @@ using EatDrinkApplication.Data;
 using EatDrinkApplication.Models;
 using EatDrinkApplication.Contracts;
 using System.Security.Claims;
+using EatDrinkApplication.Helper;
 
 namespace EatDrinkApplication.Controllers
 {
@@ -16,11 +17,13 @@ namespace EatDrinkApplication.Controllers
     {
         private readonly ApplicationDbContext _context;
         public readonly IRecipeByIngredientsRequest _recipeByIngredientsRequest;
+        public readonly IRecipeInfoRequest _recipeInfoRequest;
 
-        public FoodsController(ApplicationDbContext context, IRecipeByIngredientsRequest recipeByIngredientsRequest)
+        public FoodsController(ApplicationDbContext context, IRecipeByIngredientsRequest recipeByIngredientsRequest, IRecipeInfoRequest recipeInfoRequest)
         {
             _context = context;
             _recipeByIngredientsRequest = recipeByIngredientsRequest;
+            _recipeInfoRequest = recipeInfoRequest;
         }
 
         // GET: Foods
@@ -33,6 +36,12 @@ namespace EatDrinkApplication.Controllers
             Recipe recipe = foods[0].ToObject<Recipe>();
             Recipe[] recipes;
             recipes = new Recipe[] { recipe };
+            if (_context.Ingredients.Contains(null))
+            {
+                IngredientIO iO = new IngredientIO(_context);
+                iO.ReadFile();
+            }
+
             Foods food = new Foods()
             {
                 Property1 = recipes
@@ -41,21 +50,19 @@ namespace EatDrinkApplication.Controllers
         }
 
         // GET: Foods/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var foods = await _context.Foods
-                .FirstOrDefaultAsync(m => m.FoodsId == id);
-            if (foods == null)
+            RecipeInfo recipeInfo = await _recipeInfoRequest.GetRecipeInfo(id);
+            if (recipeInfo == null)
             {
                 return NotFound();
             }
 
-            return View(foods);
+            return View(recipeInfo);
         }
 
         // GET: Foods/Create

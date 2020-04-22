@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EatDrinkApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200417144929_Updated SavedDrinks table.")]
-    partial class UpdatedSavedDrinkstable
+    [Migration("20200422150110_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,18 @@ namespace EatDrinkApplication.Migrations
                     b.ToTable("Drink");
                 });
 
+            modelBuilder.Entity("EatDrinkApplication.Models.Foods", b =>
+                {
+                    b.Property<int>("FoodsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("FoodsId");
+
+                    b.ToTable("Foods");
+                });
+
             modelBuilder.Entity("EatDrinkApplication.Models.HomeCook", b =>
                 {
                     b.Property<int>("HomeCookId")
@@ -92,6 +104,74 @@ namespace EatDrinkApplication.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("HomeCook");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Ingredients", b =>
+                {
+                    b.Property<int>("IngredientsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IdIngredient")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IngredientsId");
+
+                    b.ToTable("Ingredients");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Missedingredient", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MissedingredientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Recipeid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("aisle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("amount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("original")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originalName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originalString")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unitLong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unitShort")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Recipeid");
+
+                    b.ToTable("Missedingredient");
                 });
 
             modelBuilder.Entity("EatDrinkApplication.Models.Mix", b =>
@@ -270,6 +350,44 @@ namespace EatDrinkApplication.Migrations
                     b.ToTable("Mix");
                 });
 
+            modelBuilder.Entity("EatDrinkApplication.Models.Recipe", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("FoodsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecipeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imageType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("likes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("missedIngredientCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("usedIngredientCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("FoodsId");
+
+                    b.ToTable("Recipe");
+                });
+
             modelBuilder.Entity("EatDrinkApplication.Models.SavedDrinks", b =>
                 {
                     b.Property<int>("SavedDrinksId")
@@ -338,6 +456,106 @@ namespace EatDrinkApplication.Migrations
                     b.ToTable("SavedDrinks");
                 });
 
+            modelBuilder.Entity("EatDrinkApplication.Models.Unusedingredient", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Recipeid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnusedingredientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("aisle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("amount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("original")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originalName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originalString")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unitLong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unitShort")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Recipeid");
+
+                    b.ToTable("Unusedingredient");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Usedingredient", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Recipeid")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsedingredientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("aisle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("amount")
+                        .HasColumnType("real");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("original")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originalName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("originalString")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unitLong")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("unitShort")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Recipeid");
+
+                    b.ToTable("Usedingredient");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -367,15 +585,15 @@ namespace EatDrinkApplication.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f51a821b-9640-4095-9733-32e5de723280",
-                            ConcurrencyStamp = "8be866c2-6dfc-4f11-abd1-f8ba3bf54334",
+                            Id = "1d258f7a-1f88-4a73-9a8b-8143e904e835",
+                            ConcurrencyStamp = "d4da1abe-0a2e-4987-86b9-36bae7830a21",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9e9917aa-7358-4886-beab-526b0d3ed760",
-                            ConcurrencyStamp = "cad551d6-c044-4a74-9a05-eeb818f8f1b8",
+                            Id = "7772f150-7e7b-400c-9643-74d8fc0d52e6",
+                            ConcurrencyStamp = "7f8062e2-f8f1-4bf6-a1fa-3755c970b863",
                             Name = "HomeCook",
                             NormalizedName = "HOMECOOK"
                         });
@@ -564,11 +782,25 @@ namespace EatDrinkApplication.Migrations
                         .HasForeignKey("IdentityUserId");
                 });
 
+            modelBuilder.Entity("EatDrinkApplication.Models.Missedingredient", b =>
+                {
+                    b.HasOne("EatDrinkApplication.Models.Recipe", null)
+                        .WithMany("missedIngredients")
+                        .HasForeignKey("Recipeid");
+                });
+
             modelBuilder.Entity("EatDrinkApplication.Models.Mix", b =>
                 {
                     b.HasOne("EatDrinkApplication.Models.CocktailDescription", null)
                         .WithMany("drinks")
                         .HasForeignKey("CocktailDescriptionId");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Recipe", b =>
+                {
+                    b.HasOne("EatDrinkApplication.Models.Foods", null)
+                        .WithMany("Property1")
+                        .HasForeignKey("FoodsId");
                 });
 
             modelBuilder.Entity("EatDrinkApplication.Models.SavedDrinks", b =>
@@ -578,6 +810,20 @@ namespace EatDrinkApplication.Migrations
                         .HasForeignKey("HomeCookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Unusedingredient", b =>
+                {
+                    b.HasOne("EatDrinkApplication.Models.Recipe", null)
+                        .WithMany("unusedIngredients")
+                        .HasForeignKey("Recipeid");
+                });
+
+            modelBuilder.Entity("EatDrinkApplication.Models.Usedingredient", b =>
+                {
+                    b.HasOne("EatDrinkApplication.Models.Recipe", null)
+                        .WithMany("usedIngredients")
+                        .HasForeignKey("Recipeid");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

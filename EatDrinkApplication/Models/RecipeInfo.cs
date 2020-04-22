@@ -31,22 +31,16 @@ namespace EatDrinkApplication.Models
         public string image { get; set; }
         public string imageType { get; set; }
         public string summary { get; set; }
-        public object[] cuisines { get; set; }
         public string[] dishTypes { get; set; }
-        public object[] diets { get; set; }
-        public object[] occasions { get; set; }
         public Winepairing winePairing { get; set; }
         public string instructions { get; set; }
-        public object[] analyzedInstructions { get; set; }
-        public object originalId { get; set; }
+        public string originalId { get; set; }
         public string spoonacularSourceUrl { get; set; }
     }
 
     public class Winepairing
     {
-        public object[] pairedWines { get; set; }
         public string pairingText { get; set; }
-        public object[] productMatches { get; set; }
     }
 
     public class Extendedingredient
@@ -61,8 +55,6 @@ namespace EatDrinkApplication.Models
         public string originalName { get; set; }
         public float amount { get; set; }
         public string unit { get; set; }
-        public string[] meta { get; set; }
-        public string[] metaInformation { get; set; }
         public Measures measures { get; set; }
     }
 

@@ -1,9 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace EatDrinkApplication.Migrations
 {
-    public partial class UpdatedSavedDrinkstable : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,6 +68,32 @@ namespace EatDrinkApplication.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cocktails", x => x.CocktailsId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Foods",
+                columns: table => new
+                {
+                    FoodsId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Foods", x => x.FoodsId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ingredients",
+                columns: table => new
+                {
+                    IngredientsId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    IdIngredient = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingredients", x => x.IngredientsId);
                 });
 
             migrationBuilder.CreateTable(
@@ -292,6 +318,32 @@ namespace EatDrinkApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Recipe",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RecipeId = table.Column<int>(nullable: false),
+                    title = table.Column<string>(nullable: true),
+                    image = table.Column<string>(nullable: true),
+                    imageType = table.Column<string>(nullable: true),
+                    usedIngredientCount = table.Column<int>(nullable: false),
+                    missedIngredientCount = table.Column<int>(nullable: false),
+                    likes = table.Column<int>(nullable: false),
+                    FoodsId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recipe", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Recipe_Foods_FoodsId",
+                        column: x => x.FoodsId,
+                        principalTable: "Foods",
+                        principalColumn: "FoodsId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SavedDrinks",
                 columns: table => new
                 {
@@ -327,15 +379,105 @@ namespace EatDrinkApplication.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f51a821b-9640-4095-9733-32e5de723280", "8be866c2-6dfc-4f11-abd1-f8ba3bf54334", "Admin", "ADMIN" });
+            migrationBuilder.CreateTable(
+                name: "Missedingredient",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MissedingredientId = table.Column<int>(nullable: false),
+                    amount = table.Column<float>(nullable: false),
+                    unit = table.Column<string>(nullable: true),
+                    unitLong = table.Column<string>(nullable: true),
+                    unitShort = table.Column<string>(nullable: true),
+                    aisle = table.Column<string>(nullable: true),
+                    name = table.Column<string>(nullable: true),
+                    original = table.Column<string>(nullable: true),
+                    originalString = table.Column<string>(nullable: true),
+                    originalName = table.Column<string>(nullable: true),
+                    image = table.Column<string>(nullable: true),
+                    Recipeid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Missedingredient", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Missedingredient_Recipe_Recipeid",
+                        column: x => x.Recipeid,
+                        principalTable: "Recipe",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Unusedingredient",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UnusedingredientId = table.Column<int>(nullable: false),
+                    amount = table.Column<float>(nullable: false),
+                    unit = table.Column<string>(nullable: true),
+                    unitLong = table.Column<string>(nullable: true),
+                    unitShort = table.Column<string>(nullable: true),
+                    aisle = table.Column<string>(nullable: true),
+                    name = table.Column<string>(nullable: true),
+                    original = table.Column<string>(nullable: true),
+                    originalString = table.Column<string>(nullable: true),
+                    originalName = table.Column<string>(nullable: true),
+                    image = table.Column<string>(nullable: true),
+                    Recipeid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Unusedingredient", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Unusedingredient_Recipe_Recipeid",
+                        column: x => x.Recipeid,
+                        principalTable: "Recipe",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usedingredient",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UsedingredientId = table.Column<int>(nullable: false),
+                    amount = table.Column<float>(nullable: false),
+                    unit = table.Column<string>(nullable: true),
+                    unitLong = table.Column<string>(nullable: true),
+                    unitShort = table.Column<string>(nullable: true),
+                    aisle = table.Column<string>(nullable: true),
+                    name = table.Column<string>(nullable: true),
+                    original = table.Column<string>(nullable: true),
+                    originalString = table.Column<string>(nullable: true),
+                    originalName = table.Column<string>(nullable: true),
+                    image = table.Column<string>(nullable: true),
+                    Recipeid = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usedingredient", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Usedingredient_Recipe_Recipeid",
+                        column: x => x.Recipeid,
+                        principalTable: "Recipe",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9e9917aa-7358-4886-beab-526b0d3ed760", "cad551d6-c044-4a74-9a05-eeb818f8f1b8", "HomeCook", "HOMECOOK" });
+                values: new object[] { "1d258f7a-1f88-4a73-9a8b-8143e904e835", "d4da1abe-0a2e-4987-86b9-36bae7830a21", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "7772f150-7e7b-400c-9643-74d8fc0d52e6", "7f8062e2-f8f1-4bf6-a1fa-3755c970b863", "HomeCook", "HOMECOOK" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -387,14 +529,34 @@ namespace EatDrinkApplication.Migrations
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Missedingredient_Recipeid",
+                table: "Missedingredient",
+                column: "Recipeid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Mix_CocktailDescriptionId",
                 table: "Mix",
                 column: "CocktailDescriptionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Recipe_FoodsId",
+                table: "Recipe",
+                column: "FoodsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SavedDrinks_HomeCookId",
                 table: "SavedDrinks",
                 column: "HomeCookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Unusedingredient_Recipeid",
+                table: "Unusedingredient",
+                column: "Recipeid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usedingredient_Recipeid",
+                table: "Usedingredient",
+                column: "Recipeid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -418,10 +580,22 @@ namespace EatDrinkApplication.Migrations
                 name: "Drink");
 
             migrationBuilder.DropTable(
+                name: "Ingredients");
+
+            migrationBuilder.DropTable(
+                name: "Missedingredient");
+
+            migrationBuilder.DropTable(
                 name: "Mix");
 
             migrationBuilder.DropTable(
                 name: "SavedDrinks");
+
+            migrationBuilder.DropTable(
+                name: "Unusedingredient");
+
+            migrationBuilder.DropTable(
+                name: "Usedingredient");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -436,7 +610,13 @@ namespace EatDrinkApplication.Migrations
                 name: "HomeCook");
 
             migrationBuilder.DropTable(
+                name: "Recipe");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Foods");
         }
     }
 }
