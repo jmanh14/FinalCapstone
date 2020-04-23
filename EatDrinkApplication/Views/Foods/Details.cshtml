@@ -16,25 +16,32 @@
         </dt>
         <br />
         <dd class="col-sm-10">
-            @Html.DisplayFor(model=>model.instructions)
+            @Html.DisplayFor(model => model.instructions)
         </dd>
+        <br />
         <dt class="col-sm-2">
             Ingredients
         </dt>
         <br />
-        @for(int i = 0; i < Model.extendedIngredients.Length; i++)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model=>model.extendedIngredients[i].originalString)
-            </dd>
-        }
+        <dd class="col-sm-10">
+            @for (int i = 0; i < Model.extendedIngredients.Length; i++)
+            {
+
+                @Html.DisplayFor(model => model.extendedIngredients[i].originalString)
+                <br />
+
+            }
+        </dd>
+        <br />
+        <br />
         <dt class="col-sm-2">
             Likes
         </dt>
         <br />
         <dd class="col-sm-10">
-            @Html.DisplayFor(model=>model.aggregateLikes)
+            @Html.DisplayFor(model => model.aggregateLikes)
         </dd>
+        <br />
         <dt class="col-sm-2">
             Image
         </dt>
