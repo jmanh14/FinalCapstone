@@ -99,9 +99,16 @@
                 <br />
             }
         </dd>
+        <dt class="col-sm-2">
+            Image
+        </dt>
+        <dd class="col-sm-10">
+            <image src="@Model.drinks[0].strDrinkThumb" alt="Image"></image>
+        </dd>
         </dl>
 </div>
 <div>
     <a asp-action="Cart" asp-route-id="@Model.drinks[0].idDrink">Add Items To Cart</a> |
+    <a asp-action="SaveDrink" asp-route-id="@Model.drinks[0].idDrink">Save Recipe</a> |
     <a asp-action="Index">Back to List</a>
 </div>

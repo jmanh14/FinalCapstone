@@ -109,6 +109,17 @@ namespace EatDrinkApplication.Controllers
             return View(cart);
         }
 
+        public async Task<IActionResult> DeleteCart(int id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
+            var cartToRemove = _context.ShoppingCart.Where(a => a.ShoppingCartId == id).FirstOrDefault();
+            _context.ShoppingCart.Remove(cartToRemove);
+            _context.SaveChanges();
+            return View("Index");
+        }
+
         public async Task<IActionResult> DeleteFood(int id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
