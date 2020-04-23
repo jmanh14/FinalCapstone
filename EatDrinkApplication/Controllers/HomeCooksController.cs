@@ -160,12 +160,9 @@ namespace EatDrinkApplication.Controllers
         // GET: HomeCooks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var homeCook = await _context.HomeCook.FindAsync(id);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
+            userId).SingleOrDefault();
             if (homeCook == null)
             {
                 return NotFound();

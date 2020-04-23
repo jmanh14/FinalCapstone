@@ -9,10 +9,12 @@ namespace EatDrinkApplication.ViewModel
 {
     public class FoodViewModel
     {
-        public Foods Foods { get; set; }
+        public Meals Meals { get; set; }
         public RecipeInfo RecipeInfo { get; set; }
         public List<SelectListItem> Ingredients { get; set; }
+        public List<SelectListItem> Cuisines { get; set; }
         public HomeCook HomeCook { get; set; }
         public string SelectedIngredient { get; set; }
+        public string SelectedCuisine { get; set; }
     }
 }

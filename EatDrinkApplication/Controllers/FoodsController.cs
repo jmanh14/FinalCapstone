@@ -19,12 +19,14 @@ namespace EatDrinkApplication.Controllers
         private readonly ApplicationDbContext _context;
         public readonly IRecipeByIngredientsRequest _recipeByIngredientsRequest;
         public readonly IRecipeInfoRequest _recipeInfoRequest;
+        public readonly IRecipeByIngredientAndCuisineRequest _recipeByIngredientAndCuisineRequest;
 
-        public FoodsController(ApplicationDbContext context, IRecipeByIngredientsRequest recipeByIngredientsRequest, IRecipeInfoRequest recipeInfoRequest)
+        public FoodsController(ApplicationDbContext context, IRecipeByIngredientsRequest recipeByIngredientsRequest, IRecipeInfoRequest recipeInfoRequest, IRecipeByIngredientAndCuisineRequest recipeByIngredientAndCuisineRequest)
         {
             _context = context;
             _recipeByIngredientsRequest = recipeByIngredientsRequest;
             _recipeInfoRequest = recipeInfoRequest;
+            _recipeByIngredientAndCuisineRequest = recipeByIngredientAndCuisineRequest;
         }
 
         // GET: Foods
@@ -41,27 +43,25 @@ namespace EatDrinkApplication.Controllers
             });
             ingredients = _ingredients.OrderBy(a => a.Text).ToList();
             string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
-            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(selectedIngredient);
-            Recipe[] recipes = new Recipe[foods.Count];
-            for (int i = 0; i < foods.Count; i++)
+            List<SelectListItem> cuisines = new List<SelectListItem>();
+            var _cuisines = _context.Cuisines.Select(a => new SelectListItem()
             {
-                Recipe recipe = foods[i].ToObject<Recipe>();
-                recipes[i] = recipe;
-            }
+                Text = a.Name,
+                Value = a.Name
+            });
+            cuisines = _cuisines.OrderBy(a => a.Text).ToList();
+            string selectedCuisine = cuisines.Select(a => a.Value).FirstOrDefault().ToString();
+            var meals = await _recipeByIngredientAndCuisineRequest.GetRecipesByIngredientAndCuisine(selectedIngredient, selectedCuisine);
             if (_context.Ingredients.Contains(null))
             {
                 IngredientIO iO = new IngredientIO(_context);
                 iO.ReadFile();
             }
-
-            Foods food = new Foods()
-            {
-                Property1 = recipes
-            };
             FoodViewModel foodViewModel = new FoodViewModel()
             {
-                Foods = food,
+                Meals = meals,
                 Ingredients = ingredients,
+                Cuisines = cuisines,
                 HomeCook = homeCook
             };
             return View(foodViewModel);
@@ -73,13 +73,7 @@ namespace EatDrinkApplication.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var homeCook = _context.HomeCook.Where(c => c.IdentityUserId ==
             userId).SingleOrDefault();
-            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(foodViewModel.SelectedIngredient);
-            Recipe[] recipes = new Recipe[foods.Count];
-            for (int i = 0; i < foods.Count; i++)
-            {
-                Recipe recipe = foods[i].ToObject<Recipe>();
-                recipes[i] = recipe;
-            }
+            var meals = await _recipeByIngredientAndCuisineRequest.GetRecipesByIngredientAndCuisine(foodViewModel.SelectedIngredient, foodViewModel.SelectedCuisine);
             List<SelectListItem> ingredients = new List<SelectListItem>();
             var _ingredients = _context.Ingredients.Select(a => new SelectListItem()
             {
@@ -87,13 +81,17 @@ namespace EatDrinkApplication.Controllers
                 Value = a.Name
             });
             ingredients = _ingredients.OrderBy(a => a.Text).ToList();
-            Foods food = new Foods()
+            List<SelectListItem> cuisines = new List<SelectListItem>();
+            var _cuisines = _context.Cuisines.Select(a => new SelectListItem()
             {
-                Property1 = recipes
-            };
+                Text = a.Name,
+                Value = a.Name
+            });
+            cuisines = _cuisines.OrderBy(a => a.Text).ToList();
             foodViewModel.HomeCook = homeCook;
-            foodViewModel.Foods = food;
+            foodViewModel.Meals = meals;
             foodViewModel.Ingredients = ingredients;
+            foodViewModel.Cuisines = cuisines;
             return View(foodViewModel);
         }
         // GET: Foods/Details/5
@@ -157,20 +155,19 @@ namespace EatDrinkApplication.Controllers
                 Value = a.Name
             });
             ingredients = _ingredients.OrderBy(a => a.Text).ToList();
+            List<SelectListItem> cuisines = new List<SelectListItem>();
+            var _cuisines = _context.Cuisines.Select(a => new SelectListItem()
+            {
+                Text = a.Name,
+                Value = a.Name
+            });
+            cuisines = _cuisines.OrderBy(a => a.Text).ToList();
             string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
-            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(selectedIngredient);
-            Recipe[] recipes = new Recipe[foods.Count];
-            for (int i = 0; i < foods.Count; i++)
-            {
-                Recipe recipe = foods[i].ToObject<Recipe>();
-                recipes[i] = recipe;
-            }
-            Foods food = new Foods()
-            {
-                Property1 = recipes
-            };
-            foodViewModel.Foods = food;
+            string selectedCuisine = cuisines.Select(a => a.Value).FirstOrDefault().ToString();
+            var meals = await _recipeByIngredientAndCuisineRequest.GetRecipesByIngredientAndCuisine(selectedIngredient, selectedCuisine);
+            foodViewModel.Meals = meals;
             foodViewModel.Ingredients = ingredients;
+            foodViewModel.Cuisines = cuisines;
             _context.SaveChanges();
             return View("Index", foodViewModel);
 
@@ -211,28 +208,26 @@ namespace EatDrinkApplication.Controllers
                 Value = a.Name
             });
             ingredients = _ingredients.OrderBy(a => a.Text).ToList();
-            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
-            var foods = await _recipeByIngredientsRequest.GetRecipesByIngredients(selectedIngredient);
-            Recipe[] recipes = new Recipe[foods.Count];
-            for (int i = 0; i < foods.Count; i++)
+            List<SelectListItem> cuisines = new List<SelectListItem>();
+            var _cuisines = _context.Cuisines.Select(a => new SelectListItem()
             {
-                Recipe recipe = foods[i].ToObject<Recipe>();
-                recipes[i] = recipe;
-            }
+                Text = a.Name,
+                Value = a.Name
+            });
+            cuisines = _cuisines.OrderBy(a => a.Text).ToList();
+            string selectedIngredient = ingredients.Select(a => a.Value).FirstOrDefault().ToString();
+            string selectedCuisine = cuisines.Select(a => a.Value).FirstOrDefault().ToString();
+            var meals = await _recipeByIngredientAndCuisineRequest.GetRecipesByIngredientAndCuisine(selectedIngredient, selectedCuisine);
             if (_context.Ingredients.Contains(null))
             {
                 IngredientIO iO = new IngredientIO(_context);
                 iO.ReadFile();
             }
-
-            Foods food = new Foods()
-            {
-                Property1 = recipes
-            };
             FoodViewModel foodViewModel = new FoodViewModel()
             {
-                Foods = food,
+                Meals = meals,
                 Ingredients = ingredients,
+                Cuisines = cuisines,
                 HomeCook = homeCook
             };
             return View("Index", foodViewModel);

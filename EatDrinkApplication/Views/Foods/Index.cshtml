@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_HomeCookLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Foods</h1>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Index">
@@ -15,6 +15,10 @@
             </div>
             <span asp-validation-for="SelectedIngredient" class="text-danger"></span>
             <div class="form-group">
+                <select asp-for="SelectedCuisine" class="form-control" asp-items="@Model.Cuisines"></select>
+            </div>
+            <span asp-validation-for="SelectedCuisine" class="text-danger"></span>
+            <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary" />
             </div>
         </form>
@@ -23,18 +27,18 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Foods</th>
+            <th>Meals</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (Recipe recipe in Model.Foods.Property1)
+        @foreach (Result result in Model.Meals.results)
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => recipe.title)
+                @Html.DisplayFor(modelItem => result.title)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@recipe.id">Details</a>
+                <a asp-action="Details" asp-route-id="@result.id">Details</a>
             </td>
         </tr>
         }
