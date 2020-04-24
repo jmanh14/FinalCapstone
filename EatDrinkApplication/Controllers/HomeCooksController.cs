@@ -117,7 +117,7 @@ namespace EatDrinkApplication.Controllers
             var cartToRemove = _context.ShoppingCart.Where(a => a.ShoppingCartId == id).FirstOrDefault();
             _context.ShoppingCart.Remove(cartToRemove);
             _context.SaveChanges();
-            return View("Index");
+            return View("Index", homeCook);
         }
 
         public async Task<IActionResult> DeleteFood(int id)

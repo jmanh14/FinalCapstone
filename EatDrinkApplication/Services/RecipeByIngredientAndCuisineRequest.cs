@@ -17,7 +17,7 @@ namespace EatDrinkApplication.Services
         }
         public async Task<Meals> GetRecipesByIngredientAndCuisine(string ingredients, string cuisine)
         {
-            string url = $"https://api.spoonacular.com/recipes/complexSearch?includeIngredients={ingredients}&cuisine={cuisine}&number=10&apiKey=44486bab87864bd2828d594c8e459825";
+            string url = $"https://api.spoonacular.com/recipes/complexSearch?includeIngredients={ingredients}&cuisine={cuisine}&number=10&apiKey={APIKEYS.spoonKey}";
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)

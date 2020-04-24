@@ -17,7 +17,7 @@ namespace EatDrinkApplication.Services
         }
         public async Task<RecipeInfo> GetRecipeInfo(string id)
         {
-            string url = $"https://api.spoonacular.com/recipes/{id}/information?includeNutrition=false&apiKey=44486bab87864bd2828d594c8e459825";
+            string url = $"https://api.spoonacular.com/recipes/{id}/information?includeNutrition=false&apiKey={APIKEYS.spoonKey}";
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
